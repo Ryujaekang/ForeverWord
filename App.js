@@ -64,11 +64,24 @@ const App: () => Node = () => {
     const reference = () => {
         database()
             .ref('/test/TestWords')
-            .set({
-                ko: '새로운',
-                en: 'new',
-            })
-            .then(() => console.log('Data set.'));
+            .limitToFirst(3)
+            .once('value')
+            .then(snapshot => {
+                console.log('User data: ', snapshot.val());
+            });
+        //     .update({
+        //         age: 39,
+        //     })
+        //     .then(() => console.log('Data updated.'));
+        // .set({
+        //     name: 'Ada Lovelace',
+        //     age: 33,
+        //     key: 22,
+        // })
+        // .then(() => console.log('Data set.'));
+        // .on('value', snapshot => {
+        //     console.log('User data: ', snapshot.val());
+        // });
     };
     console.log('reference', reference);
     return (
